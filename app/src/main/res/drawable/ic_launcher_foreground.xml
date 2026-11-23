@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- White tilted paper plane strictly inside the 66dp center safe zone (21..87) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M75.5,33.5C76.7,33.0 77.9,34.1 77.4,35.4L65.4,72.9C65.0,74.2 63.3,74.5 62.4,73.5L51.9,62.3L44.2,69.0C43.4,69.7 42.1,69.1 42.2,68.0L43.2,57.4L69.5,39.2L40.6,53.9L31.2,49.4C29.9,48.8 30.0,46.9 31.4,46.4L75.5,33.5Z" />
+</vector>

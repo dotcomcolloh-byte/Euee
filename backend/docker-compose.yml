@@ -1,0 +1,55 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: telefam
+      POSTGRES_USER: ${DB_USER:-telefam_app}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-telefam_change_me}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-telefam_app} -d telefam"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  telefam-media-sandbox:
+    build:
+      context: ./sandbox
+    restart: unless-stopped
+    network_mode: "none"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 64
+    mem_limit: 256m
+    cpus: "1.0"
+    environment:
+      SANDBOX_SOCKET_PATH: /run/sandbox/processor.sock
+    volumes:
+      - sandbox_sock:/run/sandbox
+
+  telefam-api:
+    build:
+      context: .
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      telefam-media-sandbox:
+        condition: service_started
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    volumes:
+      - sandbox_sock:/run/sandbox
+      - avatar_data:/var/lib/telefam/avatars
+
+volumes:
+  pg_data:
+  sandbox_sock:
+  avatar_data:

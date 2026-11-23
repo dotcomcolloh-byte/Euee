@@ -1,0 +1,9 @@
+# Xcode user data & derived build artifacts
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+DerivedData/
+build/
+
+# Untracked local secrets (copy from Telefam/Secrets.xcconfig.example)
+Telefam/Secrets.xcconfig

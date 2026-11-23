@@ -1,0 +1,67 @@
+name: Telefam
+options:
+  bundleIdPrefix: com.telefam.company
+  deploymentTarget:
+    iOS: "16.0"
+  usesTabs: false
+  indentWidth: 4
+settings:
+  base:
+    PRODUCT_NAME: Telefam
+    PRODUCT_BUNDLE_IDENTIFIER: com.telefam.company.app
+    TARGETED_DEVICE_FAMILY: "1,2"
+    CLANG_CXX_LANGUAGE_STANDARD: c++17
+    CLANG_CXX_LIBRARY: libc++
+    SWIFT_VERSION: "5.9"
+    SWIFT_OBJC_BRIDGING_HEADER: Telefam/Telefam-Bridging-Header.h
+    HEADER_SEARCH_PATHS:
+      - "$(SRCROOT)/../shared/cpp/include"
+      - "$(SRCROOT)/../shared/cpp/src"
+    ENABLE_BITCODE: NO
+    ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+targets:
+  Telefam:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: Telefam
+      - path: ../shared/cpp/include
+        headerVisibility: project
+      - path: ../shared/cpp/src
+        excludes:
+          - jni_bridge.cpp
+          - jni_desktop_bridge.cpp
+    entitlements:
+      path: Telefam/Telefam.entitlements
+    info:
+      path: Telefam/Info.plist
+    settings:
+      base:
+        INFOPLIST_FILE: Telefam/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Telefam/Telefam.entitlements
+        OTHER_LDFLAGS:
+          - "-lc++"
+    dependencies:
+      - sdk: AuthenticationServices.framework
+      - sdk: CryptoKit.framework
+      - sdk: Network.framework
+      - sdk: Security.framework
+      - sdk: PhotosUI.framework
+  TelefamTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: TelefamTests
+    dependencies:
+      - target: Telefam
+schemes:
+  Telefam:
+    build:
+      targets:
+        Telefam: all
+        TelefamTests: [test]
+    test:
+      targets:
+        - TelefamTests

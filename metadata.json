@@ -1,0 +1,6 @@
+{
+  "name": "Telefam",
+  "description": "Telefam secure messaging app with OTP and Google authentication, profile setup, and dark/light themes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
